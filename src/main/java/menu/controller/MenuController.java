@@ -2,12 +2,12 @@ package menu.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import menu.domain.CategoryRecommender;
 import menu.domain.Coach;
 import menu.domain.Menu;
+import menu.domain.MenuRecommender;
 import menu.repository.Category;
 import menu.repository.Day;
-import menu.service.CategoryRecommender;
-import menu.service.MenuRecommender;
 import menu.util.ReadUntilValidResult;
 import menu.validation.ValidationUtil;
 import menu.view.InputView;
@@ -16,7 +16,7 @@ import menu.view.OutputView;
 public class MenuController {
     private final InputView inputView;
     private final OutputView outputView;
-    private ReadUntilValidResult readUntilValid = new ReadUntilValidResult();
+    private final ReadUntilValidResult readUntilValid = new ReadUntilValidResult();
 
     public MenuController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;

@@ -1,9 +1,7 @@
-package menu.service;
+package menu.domain;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
-import menu.domain.Coach;
-import menu.domain.Menu;
 import menu.repository.Category;
 import menu.repository.MenuBoard;
 
