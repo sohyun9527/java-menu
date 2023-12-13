@@ -9,6 +9,7 @@ import menu.repository.Day;
 import menu.service.CategoryRecommender;
 import menu.service.MenuRecommender;
 import menu.util.ReadUntilValidResult;
+import menu.validation.ValidationUtil;
 import menu.view.InputView;
 import menu.view.OutputView;
 
@@ -36,7 +37,7 @@ public class MenuController {
             String inputName = inputView.readCoachNames();
             List<String> names = List.of(inputName.split(",", -1));
             List<Coach> coaches = generateGroup(names);
-            validateDuplication(coaches);
+            ValidationUtil.validateDuplicateName(coaches);
             return coaches;
         });
     }
@@ -49,12 +50,15 @@ public class MenuController {
         return coaches;
     }
 
-    private static void validateDuplication(List<Coach> coaches) {
-        if (coaches.stream().distinct().count() != coaches.size()) {
-            throw new IllegalArgumentException("[ERROR] 중복된 코치 이름이 있습니다.");
+    private void addHateMenusToCoach(List<Coach> coaches) {
+        for (Coach coach : coaches) {
+            readUntilValid.readUntilValid(() -> {
+                String hateInput = inputView.readHateMenu(coach.getName());
+                List<Menu> hateMenus = generateHateMenus(hateInput);
+                addHateMenus(coach, hateMenus);
+            });
         }
     }
-
 
     List<Menu> generateHateMenus(String hateInput) {
         List<Menu> hateMenus = new ArrayList<>();
@@ -64,6 +68,7 @@ public class MenuController {
                 hateMenus.add(Menu.of(hate));
             }
         }
+        ValidationUtil.validateDuplicateMenu(hateMenus);
         return hateMenus;
     }
 
@@ -71,16 +76,6 @@ public class MenuController {
         for (Menu menu : hateMenu) {
             coach.addHateMenu(menu);
         }
-    }
-
-    private void addHateMenusToCoach(List<Coach> coaches) {
-        readUntilValid.readUntilValid(() -> {
-            for (Coach coach : coaches) {
-                String hateInput = inputView.readHateMenu(coach.getName());
-                List<Menu> hateMenus = generateHateMenus(hateInput);
-                addHateMenus(coach, hateMenus);
-            }
-        });
     }
 
     private CategoryRecommender startRecommend(List<Coach> coaches) {
