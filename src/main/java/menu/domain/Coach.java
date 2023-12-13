@@ -15,9 +15,6 @@ public class Coach {
     }
 
     public void addHateMenu(Menu menu) {
-        if (isAlreadyHate(menu)) {
-            throw new IllegalArgumentException("[ERROR] 싫어하는 메뉴가 중복되었습니다!");
-        }
         hateMenu.add(menu);
     }
 
