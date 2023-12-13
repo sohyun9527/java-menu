@@ -4,7 +4,7 @@ import java.util.List;
 import menu.domain.Coach;
 import menu.domain.Menu;
 
-public class ValidationUtil {
+public class ValidationDuplicate {
 
     public static void validateDuplicateMenu(List<Menu> menus) {
         if (menus.stream().distinct().count() != menus.size()) {

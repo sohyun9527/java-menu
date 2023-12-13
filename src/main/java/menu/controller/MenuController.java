@@ -9,7 +9,7 @@ import menu.domain.MenuRecommender;
 import menu.repository.Category;
 import menu.repository.Day;
 import menu.util.ReadUntilValidResult;
-import menu.validation.ValidationUtil;
+import menu.validation.ValidationDuplicate;
 import menu.view.InputView;
 import menu.view.OutputView;
 
@@ -37,7 +37,7 @@ public class MenuController {
             String inputName = inputView.readCoachNames();
             List<String> names = List.of(inputName.split(",", -1));
             List<Coach> coaches = generateGroup(names);
-            ValidationUtil.validateDuplicateName(coaches);
+            ValidationDuplicate.validateDuplicateName(coaches);
             return coaches;
         });
     }
@@ -68,7 +68,7 @@ public class MenuController {
                 hateMenus.add(Menu.of(hate));
             }
         }
-        ValidationUtil.validateDuplicateMenu(hateMenus);
+        ValidationDuplicate.validateDuplicateMenu(hateMenus);
         return hateMenus;
     }
 
