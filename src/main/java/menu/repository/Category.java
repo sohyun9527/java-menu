@@ -18,4 +18,8 @@ public enum Category {
     public int getNumber() {
         return number;
     }
+
+    public String getName() {
+        return name;
+    }
 }
