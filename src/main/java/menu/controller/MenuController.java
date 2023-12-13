@@ -5,7 +5,7 @@ import java.util.List;
 import menu.domain.Coach;
 import menu.domain.Menu;
 import menu.repository.Category;
-import menu.repository.MenuBoard;
+import menu.repository.Day;
 import menu.service.CategoryRecommender;
 import menu.service.MenuRecommender;
 import menu.util.ReadUntilValidResult;
@@ -23,11 +23,10 @@ public class MenuController {
     }
 
     public void run() {
-        List<Menu> menuBoard = generateMenuBoard();
         outputView.printStartMessage();
 
         List<Coach> coaches = getCoaches();
-        addHateMenusToCoach(menuBoard, coaches);
+        addHateMenusToCoach(coaches);
         CategoryRecommender recommender = startRecommend(coaches);
         showResult(coaches, recommender);
     }
@@ -43,20 +42,19 @@ public class MenuController {
     private CategoryRecommender startRecommend(List<Coach> coaches) {
         CategoryRecommender recommender = new CategoryRecommender();
 
-        for (int i = 0; i < 5; i++) {
+        for (Day day : Day.values()) {
             Category recommend = recommender.recommend();
-            System.out.println("recommend = " + recommend.getName());
             MenuRecommender menuRecommender = new MenuRecommender(recommend, coaches);
             menuRecommender.recommendToCoaches();
         }
         return recommender;
     }
 
-    private void addHateMenusToCoach(List<Menu> menuBoard, List<Coach> coaches) {
+    private void addHateMenusToCoach(List<Coach> coaches) {
         readUntilValid.readUntilValid(() -> {
             for (Coach coach : coaches) {
                 String hateInput = inputView.readHateMenu(coach.getName());
-                List<Menu> hateMenus = generateHateMenus(hateInput, menuBoard);
+                List<Menu> hateMenus = generateHateMenus(hateInput);
                 addHateMenus(coach, hateMenus);
             }
         });
@@ -87,7 +85,7 @@ public class MenuController {
     }
 
 
-    List<Menu> generateHateMenus(String hateInput, List<Menu> menuBoard) {
+    List<Menu> generateHateMenus(String hateInput) {
         List<Menu> hateMenus = new ArrayList<>();
         List<String> hates = List.of(hateInput.split(",", -1));
         for (String hate : hates) {
@@ -104,19 +102,4 @@ public class MenuController {
             coach.addHateMenu(menu);
         }
     }
-
-    public List<Menu> generateMenuBoard() {
-        List<Menu> menuBoard = new ArrayList<>();
-
-        for (MenuBoard menu : MenuBoard.values()) {
-            Category category = menu.getCategory();
-            List<String> categoryMenu = menu.getCategoryMenus();
-            for (String name : categoryMenu) {
-                menuBoard.add(new Menu(name, category));
-            }
-        }
-        return menuBoard;
-    }
-
-
 }
