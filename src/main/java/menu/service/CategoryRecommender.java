@@ -1,4 +1,4 @@
-package menu.domain;
+package menu.service;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import menu.repository.Category;
@@ -21,15 +21,12 @@ public class CategoryRecommender {
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 카테고리 번호입니다."));
 
-            if (!isOverCount(category)) {
-                counter.put(category, counter.getOrDefault(category, 0) + 1);
+            int count = counter.getOrDefault(category, 0);
+            if (count < MAX_COUNT) {
+                counter.put(category, count + 1);
                 return category;
             }
         }
-    }
-
-    public boolean isOverCount(Category category) {
-        return counter.get(category) < MAX_COUNT;
     }
 
     private int randomNumberGenerator() {
