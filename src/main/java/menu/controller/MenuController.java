@@ -31,35 +31,6 @@ public class MenuController {
         showResult(coaches, recommender);
     }
 
-    private void showResult(List<Coach> coaches, CategoryRecommender recommender) {
-        outputView.printRecommendResultTitle();
-        outputView.printDays();
-        outputView.printRecommendCategories(recommender.getRecommend());
-        outputView.printRecommendResult(coaches);
-        outputView.printRecommendClear();
-    }
-
-    private CategoryRecommender startRecommend(List<Coach> coaches) {
-        CategoryRecommender recommender = new CategoryRecommender();
-
-        for (Day day : Day.values()) {
-            Category recommend = recommender.recommend();
-            MenuRecommender menuRecommender = new MenuRecommender(recommend, coaches);
-            menuRecommender.recommendToCoaches();
-        }
-        return recommender;
-    }
-
-    private void addHateMenusToCoach(List<Coach> coaches) {
-        readUntilValid.readUntilValid(() -> {
-            for (Coach coach : coaches) {
-                String hateInput = inputView.readHateMenu(coach.getName());
-                List<Menu> hateMenus = generateHateMenus(hateInput);
-                addHateMenus(coach, hateMenus);
-            }
-        });
-    }
-
     private List<Coach> getCoaches() {
         return readUntilValid.readUntilValidInput(() -> {
             String inputName = inputView.readCoachNames();
@@ -93,7 +64,6 @@ public class MenuController {
                 hateMenus.add(Menu.of(hate));
             }
         }
-
         return hateMenus;
     }
 
@@ -101,5 +71,34 @@ public class MenuController {
         for (Menu menu : hateMenu) {
             coach.addHateMenu(menu);
         }
+    }
+
+    private void addHateMenusToCoach(List<Coach> coaches) {
+        readUntilValid.readUntilValid(() -> {
+            for (Coach coach : coaches) {
+                String hateInput = inputView.readHateMenu(coach.getName());
+                List<Menu> hateMenus = generateHateMenus(hateInput);
+                addHateMenus(coach, hateMenus);
+            }
+        });
+    }
+
+    private CategoryRecommender startRecommend(List<Coach> coaches) {
+        CategoryRecommender recommender = new CategoryRecommender();
+
+        for (Day day : Day.values()) {
+            Category recommend = recommender.recommend();
+            MenuRecommender menuRecommender = new MenuRecommender(recommend, coaches);
+            menuRecommender.recommendToCoaches();
+        }
+        return recommender;
+    }
+
+    private void showResult(List<Coach> coaches, CategoryRecommender recommender) {
+        outputView.printRecommendResultTitle();
+        outputView.printDays();
+        outputView.printRecommendCategories(recommender.getRecommend());
+        outputView.printRecommendResult(coaches);
+        outputView.printRecommendClear();
     }
 }
