@@ -10,18 +10,18 @@ public enum MenuBoard {
     WESTERN(Category.WESTERN, List.of("라자냐", "그라탱", "뇨끼", "끼슈", "프렌치 토스트", "바게트", "스파게티", "피자", "파니니"));
 
     private final Category category;
-    private final List<String> name;
+    private final List<String> categoryMenus;
 
-    MenuBoard(Category category, List<String> name) {
+    MenuBoard(Category category, List<String> categoryMenus) {
         this.category = category;
-        this.name = name;
+        this.categoryMenus = categoryMenus;
     }
 
     public Category getCategory() {
         return category;
     }
 
-    public List<String> getName() {
-        return name;
+    public List<String> getCategoryMenus() {
+        return categoryMenus;
     }
 }
