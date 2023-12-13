@@ -26,7 +26,7 @@ public class MenuRecommender {
     private void recommendUntilValid(Coach coach) {
         while (true) {
             Menu recommend = generateMenu();
-            if (!coach.isAlreadyRecommended(recommend) && coach.isAlreadyHate(recommend)) {
+            if (!coach.isAlreadyRecommended(recommend) && !coach.isAlreadyHate(recommend)) {
                 coach.addRecommendMenu(recommend);
                 break;
             }
