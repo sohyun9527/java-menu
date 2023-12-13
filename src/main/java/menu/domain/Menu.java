@@ -1,9 +1,8 @@
 package menu.domain;
 
+import java.util.Arrays;
 import menu.repository.Category;
 import menu.repository.MenuBoard;
-
-import java.util.Arrays;
 
 public class Menu {
     private final String name;
@@ -22,4 +21,7 @@ public class Menu {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 메뉴입니다!"));
     }
 
+    public String getName() {
+        return name;
+    }
 }
