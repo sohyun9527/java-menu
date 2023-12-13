@@ -2,6 +2,7 @@ package menu.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Coach {
     private final String name;
@@ -49,5 +50,30 @@ public class Coach {
         if (name.isEmpty() || name.contains(" ")) {
             throw new IllegalArgumentException("[ERROR] 코치 이름의 구분자는 (,) 입니다!");
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Menu> getRecommendMenu() {
+        return recommendMenu;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Coach coach = (Coach) o;
+        return Objects.equals(name, coach.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
