@@ -1,5 +1,6 @@
 package menu.repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 public enum MenuBoard {
@@ -15,6 +16,14 @@ public enum MenuBoard {
     MenuBoard(Category category, List<String> categoryMenus) {
         this.category = category;
         this.categoryMenus = categoryMenus;
+    }
+
+    public static List<String> findByCategory(Category category) {
+        return Arrays.stream(MenuBoard.values())
+                .filter(menuBoard -> menuBoard.category == category)
+                .findFirst()
+                .map(MenuBoard::getCategoryMenus)
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 카테고리입니다!"));
     }
 
     public Category getCategory() {
