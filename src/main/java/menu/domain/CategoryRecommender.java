@@ -30,11 +30,10 @@ public class CategoryRecommender {
     }
 
     private Category getCategoryByNumber(int number) {
-        Category category = Arrays.stream(Category.values())
+        return Arrays.stream(Category.values())
                 .filter(result -> result.getNumber() == number)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 카테고리 번호입니다."));
-        return category;
     }
 
     private int randomNumberGenerator() {
