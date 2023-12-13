@@ -14,4 +14,8 @@ public enum Category {
         this.number = number;
         this.name = name;
     }
+
+    public int getNumber() {
+        return number;
+    }
 }
