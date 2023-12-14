@@ -16,7 +16,7 @@ public class CategoryRecommender {
     private final Map<Category, Integer> counter = new HashMap<>();
     private final List<Category> recommendCategories = new ArrayList<>();
 
-    private Category getValidCategoryRecommend() {
+    public Category getValidCategoryRecommend() {
         while (true) {
             Category category = getRandomCategory();
             if (!isOverRecommend(category)) {
@@ -32,10 +32,10 @@ public class CategoryRecommender {
         counter.put(category, counter.getOrDefault(category, 0) + 1);
     }
 
-    public boolean isOverRecommend(Category category) {
-        int count = counter.get(category);
+    private boolean isOverRecommend(Category category) {
+        int count = counter.getOrDefault(category, 0);
 
-        return count > MAX_RECOMMEND;
+        return count >= MAX_RECOMMEND;
     }
 
     private Category getRandomCategory() {
