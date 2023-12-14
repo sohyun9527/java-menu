@@ -1,7 +1,9 @@
 package menu.view;
 
+import java.util.List;
 import java.util.StringJoiner;
 import menu.domain.Day;
+import menu.repository.Category;
 
 public class OutputView {
     private static final String START_MESSAGE = "점심 메뉴 추천을 시작합니다.";
@@ -22,6 +24,15 @@ public class OutputView {
         joiner.add("구분");
         for (Day day : Day.values()) {
             joiner.add(day.getKoreanName());
+        }
+        System.out.println(joiner);
+    }
+
+    public void printCategories(List<Category> categories) {
+        StringJoiner joiner = initialize();
+        joiner.add("카테고리");
+        for (Category category : categories) {
+            joiner.add(category.getName());
         }
         System.out.println(joiner);
     }
