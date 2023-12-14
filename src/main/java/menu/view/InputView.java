@@ -5,7 +5,7 @@ import camp.nextstep.edu.missionutils.Console;
 public class InputView {
     private static final String REQUEST_COACH_NAMES = "코치의 이름을 입력해 주세요. (, 로 구분)";
     private static final String REQUEST_HATE_MENUS = "%s(이)가 못 먹는 메뉴를 입력해 주세요.";
-
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     public String readCoachNames() {
         System.out.println(REQUEST_COACH_NAMES);
@@ -15,8 +15,8 @@ public class InputView {
         return input;
     }
 
-    public String readHateMenus() {
-        System.out.println(REQUEST_HATE_MENUS);
+    public String readHateMenus(String coachName) {
+        System.out.printf((REQUEST_HATE_MENUS) + LINE_SEPARATOR, coachName);
 
         return getUserInput();
     }
