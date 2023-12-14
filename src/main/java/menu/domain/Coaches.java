@@ -27,10 +27,13 @@ public class Coaches {
 
     private static void validateDuplicateNames(List<Coach> coaches) {
         int uniqueCoaches = new HashSet<>(coaches).size();
-        
+
         if (uniqueCoaches != coaches.size()) {
             throw new IllegalArgumentException("[ERROR] 중복된 코치가 존재합니다!");
         }
     }
 
+    public List<Coach> getCoaches() {
+        return coaches;
+    }
 }
