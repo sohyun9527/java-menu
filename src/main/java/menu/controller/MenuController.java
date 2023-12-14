@@ -25,21 +25,30 @@ public class MenuController {
     public void run() {
         outputView.printStartMessage();
         Coaches coaches = getCoaches();
-
-        updateHateMenus(coaches);
         CategoryRecommender recommender = new CategoryRecommender();
         MenuRecommender menuRecommender = new MenuRecommender();
+
+        updateHateMenus(coaches);
+        recommendToCoaches(coaches, recommender, menuRecommender);
+        showRecommendResult(coaches, recommender);
+    }
+
+    private void showRecommendResult(Coaches coaches, CategoryRecommender recommender) {
         outputView.printRecommendResultTitle();
         outputView.printDays();
+        outputView.printCategories(recommender.getRecommendCategories());
+        outputView.printRecommendDetail(coaches);
+        outputView.printClearMessage();
+    }
+
+    private void recommendToCoaches(Coaches coaches, CategoryRecommender recommender,
+                                    MenuRecommender menuRecommender) {
         for (Day day : Day.values()) {
             Category category = recommender.getValidCategoryRecommend();
             for (Coach coach : coaches.getCoaches()) {
                 menuRecommender.recommendMenuUntilValid(coach, category);
             }
         }
-        outputView.printCategories(recommender.getRecommendCategories());
-        outputView.printRecommendDetail(coaches);
-        outputView.printClearMessage();
     }
 
     private void updateHateMenus(Coaches coaches) {
