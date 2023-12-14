@@ -7,6 +7,7 @@ import menu.Menu;
 
 public class Coach {
 
+    private static final int HATE_MENU_MAX_COUNT = 2;
     private static final int MIN_LENGTH = 2;
     private static final int MAX_LENGTH = 4;
     private final String name;
@@ -24,14 +25,33 @@ public class Coach {
     }
 
     public void addHateMenu(Menu menu) {
-        if (isContainedHateMenu(menu)) {
-            throw new IllegalArgumentException("[ERROR] 중복된 메뉴가 존재합니다!");
-        }
+        validateDuplicateHateMenu(menu);
+        validateOverSizeHateMenu();
         hateMenus.add(menu);
+    }
+
+    public void addRecommendMenu(Menu menu) {
+        recommendMenus.add(menu);
+    }
+
+    public boolean isAlreadyRecommend(Menu menu) {
+        return recommendMenus.contains(menu);
     }
 
     public boolean isContainedHateMenu(Menu menu) {
         return hateMenus.contains(menu);
+    }
+
+    private void validateOverSizeHateMenu() {
+        if (hateMenus.size() > HATE_MENU_MAX_COUNT) {
+            throw new IllegalArgumentException("[ERROR] 싫어하는 메뉴는 2개가 최대입니다");
+        }
+    }
+
+    private void validateDuplicateHateMenu(Menu menu) {
+        if (isContainedHateMenu(menu)) {
+            throw new IllegalArgumentException("[ERROR] 중복된 메뉴가 존재합니다!");
+        }
     }
 
     public static void validateContainSpace(String name) {
