@@ -9,6 +9,7 @@ import menu.domain.Day;
 import menu.domain.Menu;
 import menu.domain.MenuRecommender;
 import menu.repository.Category;
+import menu.util.ReadUntilValid;
 import menu.view.InputView;
 import menu.view.OutputView;
 
@@ -51,9 +52,11 @@ public class MenuController {
     }
 
     private Coaches getCoaches() {
-        String names = inputView.readCoachNames();
-        List<String> coachNames = List.of(names.split(",", -1));
-        return gerateCoaches(coachNames);
+        return ReadUntilValid.readUntilValidInput(() -> {
+            String names = inputView.readCoachNames();
+            List<String> coachNames = List.of(names.split(",", -1));
+            return gerateCoaches(coachNames);
+        });
     }
 
     private Coaches gerateCoaches(List<String> coachNames) {
