@@ -69,6 +69,10 @@ public class Coach {
         return name;
     }
 
+    public List<Menu> getRecommendMenus() {
+        return recommendMenus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

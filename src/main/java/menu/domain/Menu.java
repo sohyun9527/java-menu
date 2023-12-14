@@ -20,4 +20,8 @@ public class Menu {
                 .map(menuBoard -> new Menu(name, menuBoard.getCategory()))
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 메뉴입니다"));
     }
+
+    public String getName() {
+        return name;
+    }
 }
