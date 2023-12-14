@@ -2,7 +2,10 @@ package menu.view;
 
 import java.util.List;
 import java.util.StringJoiner;
+import menu.domain.Coach;
+import menu.domain.Coaches;
 import menu.domain.Day;
+import menu.domain.Menu;
 import menu.repository.Category;
 
 public class OutputView {
@@ -35,6 +38,26 @@ public class OutputView {
             joiner.add(category.getName());
         }
         System.out.println(joiner);
+    }
+
+    public void printRecommendDetail(Coaches coaches) {
+        for (Coach coach : coaches.getCoaches()) {
+            StringJoiner joiner = initialize();
+
+            joiner.add(coach.getName());
+            addRecommendMenus(coach, joiner);
+            System.out.println(joiner);
+        }
+    }
+
+    private void addRecommendMenus(Coach coach, StringJoiner joiner) {
+        for (Menu recommendMenu : coach.getRecommendMenus()) {
+            joiner.add(recommendMenu.getName());
+        }
+    }
+
+    public void printClearMessage() {
+        System.out.println(CLEAR_MESSAGE);
     }
 
     public StringJoiner initialize() {
