@@ -23,9 +23,7 @@ public class MenuController {
 
     public void run() {
         outputView.printStartMessage();
-        String names = inputView.readCoachNames();
-        List<String> coachNames = List.of(names.split(",", -1));
-        Coaches coaches = getCoaches(coachNames);
+        Coaches coaches = getCoaches();
 
         for (Coach coach : coaches.getCoaches()) {
             String menus = inputView.readHateMenus(coach.getName());
@@ -52,7 +50,13 @@ public class MenuController {
         outputView.printClearMessage();
     }
 
-    private Coaches getCoaches(List<String> coachNames) {
+    private Coaches getCoaches() {
+        String names = inputView.readCoachNames();
+        List<String> coachNames = List.of(names.split(",", -1));
+        return gerateCoaches(coachNames);
+    }
+
+    private Coaches gerateCoaches(List<String> coachNames) {
         List<Coach> coaches = new ArrayList<>();
         for (String coachName : coachNames) {
             coaches.add(Coach.of(coachName));
