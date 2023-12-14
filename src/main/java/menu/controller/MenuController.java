@@ -26,16 +26,7 @@ public class MenuController {
         outputView.printStartMessage();
         Coaches coaches = getCoaches();
 
-        for (Coach coach : coaches.getCoaches()) {
-            String menus = inputView.readHateMenus(coach.getName());
-            if (menus.isBlank()) {
-                continue;
-            }
-            List<String> hateMenus = List.of(menus.split(",", -1));
-            for (String hateMenu : hateMenus) {
-                coach.addHateMenu(Menu.of(hateMenu));
-            }
-        }
+        updateHateMenus(coaches);
         CategoryRecommender recommender = new CategoryRecommender();
         MenuRecommender menuRecommender = new MenuRecommender();
         outputView.printRecommendResultTitle();
@@ -49,6 +40,25 @@ public class MenuController {
         outputView.printCategories(recommender.getRecommendCategories());
         outputView.printRecommendDetail(coaches);
         outputView.printClearMessage();
+    }
+
+    private void updateHateMenus(Coaches coaches) {
+        for (Coach coach : coaches.getCoaches()) {
+            String menus = inputView.readHateMenus(coach.getName());
+            if (menus.isBlank()) {
+                continue;
+            }
+            addHateMenusToCoach(coach, menus);
+        }
+    }
+
+    private static void addHateMenusToCoach(Coach coach, String menus) {
+        ReadUntilValid.readUntilValidInput(() -> {
+            List<String> hateMenus = List.of(menus.split(",", -1));
+            for (String hateMenu : hateMenus) {
+                coach.addHateMenu(Menu.of(hateMenu));
+            }
+        });
     }
 
     private Coaches getCoaches() {
