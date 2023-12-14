@@ -1,4 +1,4 @@
-package menu;
+package menu.domain;
 
 import java.util.Arrays;
 import menu.repository.Category;
