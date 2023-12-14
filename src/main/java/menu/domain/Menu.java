@@ -15,7 +15,7 @@ public class Menu {
 
     public static Menu of(String name) {
         return Arrays.stream(MenuBoard.values())
-                .filter(menuBoard -> menuBoard.getMenus().contains(name))
+                .filter(menuBoard -> menuBoard.getMenus().contains(name) || name.isEmpty())
                 .findFirst()
                 .map(menuBoard -> new Menu(name, menuBoard.getCategory()))
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 메뉴입니다"));

@@ -33,43 +33,6 @@ public class MenuController {
         showRecommendResult(coaches, recommender);
     }
 
-    private void showRecommendResult(Coaches coaches, CategoryRecommender recommender) {
-        outputView.printRecommendResultTitle();
-        outputView.printDays();
-        outputView.printCategories(recommender.getRecommendCategories());
-        outputView.printRecommendDetail(coaches);
-        outputView.printClearMessage();
-    }
-
-    private void recommendToCoaches(Coaches coaches, CategoryRecommender recommender,
-                                    MenuRecommender menuRecommender) {
-        for (Day day : Day.values()) {
-            Category category = recommender.getValidCategoryRecommend();
-            for (Coach coach : coaches.getCoaches()) {
-                menuRecommender.recommendMenuUntilValid(coach, category);
-            }
-        }
-    }
-
-    private void updateHateMenus(Coaches coaches) {
-        for (Coach coach : coaches.getCoaches()) {
-            String menus = inputView.readHateMenus(coach.getName());
-            if (menus.isBlank()) {
-                continue;
-            }
-            addHateMenusToCoach(coach, menus);
-        }
-    }
-
-    private static void addHateMenusToCoach(Coach coach, String menus) {
-        ReadUntilValid.readUntilValidInput(() -> {
-            List<String> hateMenus = List.of(menus.split(",", -1));
-            for (String hateMenu : hateMenus) {
-                coach.addHateMenu(Menu.of(hateMenu));
-            }
-        });
-    }
-
     private Coaches getCoaches() {
         return ReadUntilValid.readUntilValidInput(() -> {
             String names = inputView.readCoachNames();
@@ -84,5 +47,39 @@ public class MenuController {
             coaches.add(Coach.of(coachName));
         }
         return Coaches.of(coaches);
+    }
+
+    private void updateHateMenus(Coaches coaches) {
+        for (Coach coach : coaches.getCoaches()) {
+            ReadUntilValid.readUntilValidInput(() -> {
+                String menus = inputView.readHateMenus(coach.getName());
+                addHateMenusToCoach(coach, menus);
+            });
+        }
+    }
+
+    private void addHateMenusToCoach(Coach coach, String menus) {
+        List<String> hateMenus = List.of(menus.split(",", -1));
+        for (String hateMenu : hateMenus) {
+            coach.addHateMenu(Menu.of(hateMenu));
+        }
+    }
+
+    private void recommendToCoaches(Coaches coaches, CategoryRecommender recommender,
+                                    MenuRecommender menuRecommender) {
+        for (Day day : Day.values()) {
+            Category category = recommender.getValidCategoryRecommend();
+            for (Coach coach : coaches.getCoaches()) {
+                menuRecommender.recommendMenuUntilValid(coach, category);
+            }
+        }
+    }
+
+    private void showRecommendResult(Coaches coaches, CategoryRecommender recommender) {
+        outputView.printRecommendResultTitle();
+        outputView.printDays();
+        outputView.printCategories(recommender.getRecommendCategories());
+        outputView.printRecommendDetail(coaches);
+        outputView.printClearMessage();
     }
 }
