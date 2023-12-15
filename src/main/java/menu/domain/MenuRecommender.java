@@ -6,6 +6,16 @@ import java.util.List;
 
 public class MenuRecommender {
 
+    public void recommend(Category category, Coach coach) {
+        while (true) {
+            List<String> menuNames = getMenuNamesByCategory(category);
+            Menu recommendMenu = Menu.of(shuffleAndRecommend(menuNames));
+            if (!coach.isHateMenu(recommendMenu) && !coach.isRecommended(recommendMenu)) {
+                coach.addRecommend(recommendMenu);
+                return;
+            }
+        }
+    }
 
     public String shuffleAndRecommend(List<String> names) {
         return Randoms.shuffle(names).get(0);
