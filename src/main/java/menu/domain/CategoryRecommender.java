@@ -48,4 +48,8 @@ public class CategoryRecommender {
     public int randomNumberGenerate() {
         return Randoms.pickNumberInRange(START_NUMBER, END_NUMBER);
     }
+
+    public List<Category> getRecommended() {
+        return recommended;
+    }
 }
