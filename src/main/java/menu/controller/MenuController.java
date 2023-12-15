@@ -26,7 +26,11 @@ public class MenuController {
         Coaches coaches = Coaches.of(inputView.readCoachNames());
 
         for (Coach coach : coaches.getCoaches()) {
-            Menus hateMenus = Menus.generateHateMenus(inputView.readHateMenus());
+            String menuNames = inputView.readHateMenus(coach.getName());
+            if (menuNames.isBlank()) {
+                continue;
+            }
+            Menus hateMenus = Menus.generateHateMenus(menuNames);
             for (Menu hateMenu : hateMenus.getMenus()) {
                 coach.addHate(hateMenu);
             }

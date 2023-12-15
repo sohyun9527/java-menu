@@ -14,8 +14,8 @@ public class InputView {
         return input;
     }
 
-    public String readHateMenus() {
-        System.out.println(REQUEST_HATE_MENU);
+    public String readHateMenus(String coachName) {
+        System.out.printf(REQUEST_HATE_MENU + "%n", coachName);
         return getUserInput();
     }
 
