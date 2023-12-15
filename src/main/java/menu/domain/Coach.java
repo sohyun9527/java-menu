@@ -18,6 +18,22 @@ public class Coach {
         return new Coach(name);
     }
 
+    public void addRecommend(Menu menu) {
+        recommends.add(menu);
+    }
+
+    public void addHate(Menu menu) {
+        hates.add(menu);
+    }
+
+    public boolean isRecommended(Menu menu) {
+        return recommends.contains(menu);
+    }
+
+    public boolean isHateMenu(Menu menu) {
+        return hates.contains(menu);
+    }
+
     private static void validateNameLength(String name) {
         if (name.length() < 2 || name.length() > 4) {
             throw new IllegalArgumentException("[ERROR] 이름의 길이는 2 ~ 4자 사이로 제한되어있습니다");
